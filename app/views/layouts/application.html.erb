@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title><%= content_for?(:title) ? yield(:title) : "foundation-rails" %></title>
+    <title><%= content_for?(:title) ? yield(:title) : "TaskManager" %></title>
 
     <%= stylesheet_link_tag    "application" %>
     <%= javascript_include_tag "vendor/modernizr" %>
@@ -12,8 +12,58 @@
   </head>
 
   <body>
+  <nav class="top-bar" data-topbar>
+    <ul class="title-area">
+      <li class="name">
+        <h1><a href="#">Taskmanager</a></h1>
+      </li>
+      <li class="toggle-topbar menu-icon">
+        <a href="#">Menu</a>
+      </li>
+    </ul>
+    <section class="top-bar-section">
+      <!-- Right Nav Section -->
+      <ul class="right">
+       <% if user_signed_in? %>
 
-    <%= yield %>
+        <li>
+          <%=
+          link_to current_user.name, edit_user_registration_path
+          %>
+        </li>
+        <li>
+          <%=
+          link_to 'Log Out', logout_path, method: :get
+          %>
+        </li>
+
+        <% else %>
+
+        <li>
+           <%=
+          link_to 'Sign Up', register_path, class: "button"
+          %>
+        </li>
+        <li>
+          <%=
+          link_to 'Sign In', login_path
+          %>
+        </li>
+
+        <% end %>
+      </ul>
+    </section>
+  </nav>
+
+  <div class="row">
+    <div class="large-12 columns">
+       <p class="notice"><%= notice %></p>
+       <p class="alert"><%= alert %></p>
+
+      <%= yield %>
+    </div>
+  </div>
+
     <%= javascript_include_tag "application" %>
   </body>
 </html>
